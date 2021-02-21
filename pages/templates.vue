@@ -4,7 +4,7 @@
     <div class="row">
       <card>
         <div slot="header">
-          <h4 class="card-title">Widgets {{iotIndicatorConfig.column}}</h4>
+          <h4 class="card-title">Widgets {{ iotIndicatorConfig.column }}</h4>
         </div>
 
         <div class="row">
@@ -17,6 +17,9 @@
               placeholder="Select Widget"
               style="width: 100%;"
             >
+              <el-option class="text-dark" value="camera" label="ESP32 Cam <-">
+              </el-option>
+
               <el-option
                 class="text-dark"
                 value="numberchart"
@@ -48,6 +51,74 @@
 
             <br />
             <br />
+
+            <!-- FORM CAMERA  TYPE -->
+            <div v-if="widgetType == 'camera'">
+              <base-input
+                v-model="cameraConfig.cameraName"
+                label="Camera Name"
+                type="text"
+              >
+              </base-input>
+
+              <el-select
+                v-model="cameraConfig.column"
+                class="select-success"
+                placeholder="Select Column Width"
+                style="width: 100%;"
+              >
+                <el-option
+                  class="text-dark"
+                  value="col-3"
+                  label="col-3"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-4"
+                  label="col-4"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-5"
+                  label="col-5"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-6"
+                  label="col-6"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-7"
+                  label="col-7"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-8"
+                  label="col-8"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-9"
+                  label="col-9"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-10"
+                  label="col-10"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-11"
+                  label="col-11"
+                ></el-option>
+                <el-option
+                  class="text-dark"
+                  value="col-12"
+                  label="col-12"
+                ></el-option>
+              </el-select>
+            </div>
 
             <!-- FORMS NUMBER CHART TYPE -->
             <div v-if="widgetType == 'numberchart'">
@@ -415,7 +486,6 @@
 
             <!-- FORM INDICATOR TYPE -->
             <div v-if="widgetType == 'indicator'">
-
               <base-input
                 v-model="iotIndicatorConfig.variableFullName"
                 label="Var Name"
@@ -533,6 +603,11 @@
 
           <!-- WIDGET PREVIEW -->
           <div class="col-6">
+            <Espcam
+              v-if="widgetType == 'camera'"
+              :config="cameraConfig"
+            ></Espcam>
+
             <Rtnumberchart
               v-if="widgetType == 'numberchart'"
               :config="ncConfig"
@@ -567,7 +642,7 @@
           </div>
         </div>
       </card>
-    </div> 
+    </div>
 
     <!-- DASHBOARD PREVIEW -->
     <div class="row">
@@ -582,6 +657,11 @@
           @click="deleteWidget(index)"
           style="margin-bottom: 10px;"
         ></i>
+
+        <Espcam
+          v-if="widget.widget == 'camera'"
+          :config="cameraConfig"
+        ></Espcam>
 
         <Rtnumberchart
           v-if="widget.widget == 'numberchart'"
@@ -606,7 +686,7 @@
     </div>
 
     <!-- SAVE TEMPLATE FORM-->
-    <div class="row" >
+    <div class="row">
       <card>
         <div slot="header">
           <h4 class="card-title">Save Template</h4>
@@ -703,8 +783,6 @@
         </div>
       </card>
     </div>
-
-
   </div>
 </template>
 
@@ -728,6 +806,16 @@ export default {
       templateName: "",
       templateDescription: "",
 
+      cameraConfig: {
+        cameraName: "",
+        column: "col-4",
+        variableType: "output",
+        selectedDevice: {
+          name: "Home",
+          dId: "8888"
+        },
+        widget: "camera"
+      },
 
       ncConfig: {
         userId: "sampleuserid",
@@ -764,7 +852,6 @@ export default {
         column: "col-6"
       },
 
-
       iotIndicatorConfig: {
         userId: "userid",
         selectedDevice: {
@@ -798,9 +885,7 @@ export default {
         widget: "button",
         class: "danger",
         message: "{'fanstatus': 'stop'}"
-      },
-
-
+      }
     };
   },
 
@@ -879,33 +964,31 @@ export default {
 
     //Delete Template
     async deleteTemplate(template) {
-
-      
       const axiosHeaders = {
         headers: {
           token: this.$store.state.auth.token
         },
-        params:{
-          templateId:template._id
+        params: {
+          templateId: template._id
         }
       };
 
       console.log(axiosHeaders);
 
       try {
-
         const res = await this.$axios.delete("/template", axiosHeaders);
 
-        console.log(res.data)
+        console.log(res.data);
 
         if (res.data.status == "fail" && res.data.error == "template in use") {
-
           this.$notify({
             type: "danger",
             icon: "tim-icons icon-alert-circle-exc",
-            message: template.name + " is in use. First remove the devices linked to the template!"
+            message:
+              template.name +
+              " is in use. First remove the devices linked to the template!"
           });
-          
+
           return;
         }
 
@@ -915,7 +998,7 @@ export default {
             icon: "tim-icons icon-check-2",
             message: template.name + " was deleted!"
           });
-          
+
           this.getTemplates();
         }
       } catch (error) {
@@ -931,6 +1014,11 @@ export default {
 
     //Add Widget
     addNewWidget() {
+      if (this.widgetType == "camera") {
+        this.cameraConfig.variable = this.makeid(10);
+        this.widgets.push(JSON.parse(JSON.stringify(this.cameraConfig)));
+      }
+
       if (this.widgetType == "numberchart") {
         this.ncConfig.variable = this.makeid(10);
         this.widgets.push(JSON.parse(JSON.stringify(this.ncConfig)));
@@ -950,7 +1038,6 @@ export default {
         this.iotIndicatorConfig.variable = this.makeid(10);
         this.widgets.push(JSON.parse(JSON.stringify(this.iotIndicatorConfig)));
       }
-
     },
 
     //Delete Widget

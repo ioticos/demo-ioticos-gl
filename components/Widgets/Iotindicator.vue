@@ -1,5 +1,5 @@
 <template>
-  <card>
+  <card style="height:149px">
     <div slot="header">
       <h4 class="card-title">
         {{ config.selectedDevice.name }} - {{ config.variableFullName }}
@@ -9,49 +9,59 @@
     <i
       class="fa "
       :class="[config.icon, getIconColorClass()]"
-      style="font-size: 30px"
+      style="font-size: 50px"
     ></i>
   </card>
 </template>
 
 <script>
 export default {
-  props: ['config'],
+  props: ["config"],
   data() {
     return {
       value: false,
       topic: "",
-      props: ['config']      
+      props: ["config"]
     };
   },
-  watch:  {
-            config: {
-                immediate: true,
-                deep: true,
-                handler() {
-                    setTimeout(() => {
-                        this.value = false;
+  watch: {
+    config: {
+      immediate: true,
+      deep: true,
+      handler() {
+        setTimeout(() => {
+          this.value = false;
 
-                        this.$nuxt.$off(this.topic);
+          this.$nuxt.$off(this.topic);
 
-                        //userId/dId/uniquestr/sdata
-                        const topic = this.config.userId + "/" + this.config.selectedDevice.dId + "/" + this.config.variable + "/sdata";
-                        this.$nuxt.$on(topic, this.processReceivedData);
-
-                    }, 300);
-                }
-            }
-        },
-  mounted(){
-    const topic = this.config.userId + "/" + this.config.selectedDevice.dId + "/" + this.config.variable + "/sdata";
+          //userId/dId/uniquestr/sdata
+          const topic =
+            this.config.userId +
+            "/" +
+            this.config.selectedDevice.dId +
+            "/" +
+            this.config.variable +
+            "/sdata";
+          this.$nuxt.$on(topic, this.processReceivedData);
+        }, 300);
+      }
+    }
+  },
+  mounted() {
+    const topic =
+      this.config.userId +
+      "/" +
+      this.config.selectedDevice.dId +
+      "/" +
+      this.config.variable +
+      "/sdata";
     this.$nuxt.$on(topic, this.processReceivedData);
   },
-  beforeDestroy(){
+  beforeDestroy() {
     this.$nuxt.$off(this.topic);
   },
   methods: {
-
-    processReceivedData(data){
+    processReceivedData(data) {
       try {
         console.log("received");
         console.log(data);
@@ -60,7 +70,7 @@ export default {
         console.log(error);
       }
     },
-      
+
     getIconColorClass() {
       if (!this.value) {
         return "text-dark";
@@ -79,9 +89,6 @@ export default {
         return "text-danger";
       }
     }
-
   }
 };
-
-
 </script>
