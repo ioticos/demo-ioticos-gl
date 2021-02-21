@@ -29,7 +29,13 @@ export default {
   },
   methods: {
     startCam() {
-      const WS_URL = "ws://192.168.0.6:65080/";
+      var WS_URL = "";
+      if (process.env.environment == "prod") {
+        WS_URL = "wss://demo.ioticos.org:65080";
+      } else {
+        WS_URL = "ws://192.168.0.6:65080";
+      }
+
       this.ws = new WebSocket(WS_URL);
       let urlObject_1, urlObject_2, urlObject_3;
 

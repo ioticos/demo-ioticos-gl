@@ -66,6 +66,7 @@ export default {
     baseURL: process.env.AXIOS_BASE_URL
   },
   env: {
+    environment: process.env.environment,
     mqtt_prefix: process.env.MQTT_PREFIX,
     mqtt_host: process.env.MQTT_HOST,
     mqtt_port: process.env.MQTT_PORT
@@ -77,7 +78,7 @@ export default {
   },
 
   serverMiddleware: {
-    // '/api': '~/api'
+     '/api': '~/api'
   },
 
   /*
