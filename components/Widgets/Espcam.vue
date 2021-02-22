@@ -31,7 +31,7 @@ export default {
     startCam() {
       var WS_URL = "";
       if (process.env.environment == "prod") {
-        WS_URL = "wss://demo.ioticos.org:65080";
+        WS_URL = "wss://demo.ioticos.org:65081";
       } else {
         WS_URL = "ws://192.168.0.6:65080";
       }
