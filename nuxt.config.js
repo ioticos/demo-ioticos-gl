@@ -77,10 +77,6 @@ export default {
     host: "0.0.0.0" // default: localhost
   },
 
-  serverMiddleware: {
-     '/api': '~/api'
-  },
-
   /*
    ** Build configuration
    */
