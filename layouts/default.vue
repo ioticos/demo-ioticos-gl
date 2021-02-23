@@ -110,7 +110,7 @@ export default {
         clean: true,
         connectTimeout: 5000,
         reconnectPeriod: 5000,
-        keepalive: 60,
+        keepalive: 5,
 
         // Certification Information
         clientId:
