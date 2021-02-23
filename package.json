@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "nuxt",
     "devn": "nodemon api/index.js --exec babel-node",
-    "build": "nuxt build",
-    "generate": "nuxt generate",
-    "start": "nuxt start"
+
+    "build_front": "nuxt build",
+    "start_front": "nuxt start",
+
+    "build_back": "babel api/index.js -d api/dist",
+    "start_back": "node api/dist/index.js",
+
+    "generate": "nuxt generate"
+    
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
