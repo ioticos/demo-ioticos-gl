@@ -283,8 +283,7 @@ async function createSaverRule(userId, dId, status) {
 
     const topic = userId + "/" + dId + "/+/sdata";
 
-    const rawsql =
-      'SELECT topic, payload FROM "' + topic + '" WHERE payload.save = 1';
+    const rawsql = 'SELECT topic, payload FROM "' + topic + '" WHERE payload.save = 1';
 
     var newRule = {
       rawsql: rawsql,
