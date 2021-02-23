@@ -11,7 +11,7 @@
     "start_front": "nuxt start",
 
     "build_back": "babel api/index.js -d api/dist",
-    "start_back": "babel-node api/app.js --exec",
+    "start_back": "babel-node api/index.js --exec",
 
     "generate": "nuxt generate"
     
