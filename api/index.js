@@ -171,7 +171,7 @@ function sendClientsToCam() {
   setTimeout(() => {
     sendClientsToCam();
     console.log("  " + connectedCams.length);
-  }, 1000);
+  }, 60000);
 }
 
 sendClientsToCam();
