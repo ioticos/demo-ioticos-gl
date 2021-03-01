@@ -126,46 +126,57 @@ wsServer.on("connection", (ws, req) => {
   console.log("Connected");
 
   ws.on("message", data => {
-    if (data.indexOf("WEB_CLIENT") !== -1) {
-      connectedClients.push(ws);
-      console.log("WEB_CLIENT ADDED");
-      console.log(connectedClients.length);
-      return;
+
+    try {
+          if (data.indexOf("WEB_CLIENT") !== -1) {
+            connectedClients.push(ws);
+            console.log("WEB_CLIENT ADDED");
+            console.log(connectedClients.length);
+            return;
+          }
+
+          if (data == "CAM_CLIENT") {
+            connectedCams.push(ws);
+            console.log("CAM CLIENT ADDED");
+            console.log(connectedCams.length);
+            return;
+          }
+
+          connectedClients.forEach((ws, i) => {
+            if (connectedClients[i] == ws && ws.readyState === ws.OPEN) {
+              ws.send(data);
+            } else {
+              connectedClients.splice(i, 1);
+              console.log("WEB_CLIENT DELETED");
+            }
+          });
+    } catch (error) {
+      console.log("error en server cam 3");
     }
 
-    if (data == "CAM_CLIENT") {
-      connectedCams.push(ws);
-      console.log("CAM CLIENT ADDED");
-      console.log(connectedCams.length);
-      return;
-    }
-
-    connectedClients.forEach((ws, i) => {
-      if (connectedClients[i] == ws && ws.readyState === ws.OPEN) {
-        ws.send(data);
-      } else {
-        connectedClients.splice(i, 1);
-        console.log("WEB_CLIENT DELETED");
-      }
-    });
   });
 
   ws.on("error", error => {
     console.error("WebSocket error observed: ", error);
   });
+
 });
 
 function sendClientsToCam() {
   connectedCams.forEach((ws, i) => {
-    if (connectedCams[i] == ws && ws.readyState === ws.OPEN) {
-      ws.send(connectedClients.length.toString());
-      console.log(
-        "Cantidad de usuarios viendo la cámara   " + connectedClients.length
-      );
-    } else {
-      connectedCams.splice(i, 1);
-      console.log("CAM_CLIENT DELETED");
+
+    try {
+          if (connectedCams[i] == ws && ws.readyState === ws.OPEN) {
+            ws.send(connectedClients.length.toString());
+          } else {
+            connectedCams.splice(i, 1);
+            console.log("CAM_CLIENT DELETED");
+          }
+    } catch (error) {
+      console.log("error en server cam");
     }
+
+
   });
 
   setTimeout(() => {

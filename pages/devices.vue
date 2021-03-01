@@ -57,6 +57,7 @@
               type="primary"
               class="mb-3"
               size="lg"
+              disabled
               >Add</base-button
             >
           </div>
@@ -111,6 +112,7 @@
                   type="primary"
                   on-text="On"
                   off-text="Off"
+                  disabled
                 ></base-switch>
               </el-tooltip>
 
@@ -126,6 +128,7 @@
                   size="sm"
                   class="btn-link"
                   @click="deleteDevice(row)"
+                  disabled
                 >
                   <i class="tim-icons icon-simple-remove "></i>
                 </base-button>
