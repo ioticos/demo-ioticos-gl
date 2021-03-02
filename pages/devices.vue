@@ -57,7 +57,6 @@
               type="primary"
               class="mb-3"
               size="lg"
-              disabled
               >Add</base-button
             >
           </div>
@@ -112,7 +111,6 @@
                   type="primary"
                   on-text="On"
                   off-text="Off"
-                  disabled
                 ></base-switch>
               </el-tooltip>
 
@@ -128,7 +126,6 @@
                   size="sm"
                   class="btn-link"
                   @click="deleteDevice(row)"
-                  disabled
                 >
                   <i class="tim-icons icon-simple-remove "></i>
                 </base-button>
@@ -166,12 +163,19 @@ export default {
     };
   },
   mounted() {
-    
     this.getTemplates();
   },
   methods: {
     updateSaverRuleStatus(rule) {
-      
+                 this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
+
+      /*
       var ruleCopy = JSON.parse(JSON.stringify(rule));
 
       ruleCopy.status = !ruleCopy.status;
@@ -214,9 +218,18 @@ export default {
           });
           return;
         });
+        */
     },
 
     deleteDevice(device) {
+
+            this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
       const axiosHeaders = {
         headers: {
           token: this.$store.state.auth.accessToken
@@ -253,6 +266,14 @@ export default {
     },
     //new device
     createNewDevice() {
+                       this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
+
       if (this.newDevice.name == "") {
         this.$notify({
           type: "warning",
@@ -363,6 +384,14 @@ export default {
     },
 
     deleteDevice(device) {
+
+            this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
       const axiosHeader = {
         headers: {
           token: this.$store.state.auth.token
@@ -392,8 +421,7 @@ export default {
             message: " Error deleting " + device.name
           });
         });
-    },
-
+    }
   }
 };
 </script>

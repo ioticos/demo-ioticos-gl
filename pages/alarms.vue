@@ -126,7 +126,12 @@
 
             <el-table-column prop="counter" label="Matches"></el-table-column>
 
-            <el-table-column min-width="110" header-align="right" align="right" label="Actions">
+            <el-table-column
+              min-width="110"
+              header-align="right"
+              align="right"
+              label="Actions"
+            >
               <div
                 slot-scope="{ row, $index }"
                 class="text-right table-actions"
@@ -205,10 +210,14 @@ export default {
     };
   },
   methods: {
-
-
     deleteDevice(rule) {
-
+            this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
       const axiosHeaders = {
         headers: {
           token: this.$store.state.auth.token
@@ -221,7 +230,7 @@ export default {
       this.$axios
         .delete("/alarm-rule", axiosHeaders)
         .then(res => {
-           if (res.data.status == "success") {
+          if (res.data.status == "success") {
             this.$notify({
               type: "success",
               icon: "tim-icons icon-check-2",
@@ -243,6 +252,14 @@ export default {
     },
 
     updateStatusRule(rule) {
+            this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
+
       const axiosHeaders = {
         headers: {
           token: this.$store.state.auth.token
@@ -282,6 +299,14 @@ export default {
     },
 
     createNewRule() {
+            this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
+
       if (this.selectedWidgetIndex == null) {
         this.$notify({
           type: "warning",
@@ -318,7 +343,6 @@ export default {
         return;
       }
 
-      
       this.newRule.dId = this.$store.state.selectedDevice.dId;
       this.newRule.deviceName = this.$store.state.selectedDevice.name;
       this.newRule.variableFullName = this.$store.state.selectedDevice.template.widgets[
@@ -327,8 +351,6 @@ export default {
       this.newRule.variable = this.$store.state.selectedDevice.template.widgets[
         this.selectedWidgetIndex
       ].variable;
-
-      
 
       const axiosHeaders = {
         headers: {

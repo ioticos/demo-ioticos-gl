@@ -922,6 +922,13 @@ export default {
 
     //Save Template
     async saveTemplate() {
+            this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
       const axiosHeaders = {
         headers: {
           token: this.$store.state.auth.token
@@ -964,6 +971,14 @@ export default {
 
     //Delete Template
     async deleteTemplate(template) {
+      
+                  this.$notify({
+        type: "success",
+        icon: "tim-icons icon-check-2",
+        message:
+          " Sorry this is a demo. But when you have your own you will be able to do whatever you want."
+      });
+      return false;
       const axiosHeaders = {
         headers: {
           token: this.$store.state.auth.token
