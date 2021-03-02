@@ -13,6 +13,7 @@
             v-model="user.email"
             placeholder="Email"
             addon-left-icon="tim-icons icon-email-85"
+            disabled
           >
           </base-input>
 
@@ -22,6 +23,7 @@
             type="password"
             placeholder="Password"
             addon-left-icon="tim-icons icon-lock-circle"
+            disabled
           >
           </base-input>
         </div>
@@ -63,8 +65,8 @@ export default {
   data() {
     return {
       user: {
-        email: "",
-        password: ""
+        email: "demo@demo.com",
+        password: "demodemoabcabc123"
       }
     };
   },

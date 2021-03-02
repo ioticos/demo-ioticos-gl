@@ -3,6 +3,7 @@
     <div
       v-for="(widget, index) in $store.state.selectedDevice.template.widgets"
       :key="index"
+      class=""
       :class="[widget.column]"
     >
       <Espcam
