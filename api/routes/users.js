@@ -112,7 +112,7 @@ router.post("/getmqttcredentials", checkAuth, async (req, res) => {
     res.json(response);
 
     setTimeout(() => {
-      getWebUserMqttCredentials(userId);
+     // getWebUserMqttCredentials(userId);
     }, 5000);
 
     return;
@@ -148,7 +148,7 @@ router.post(
       res.json(response);
 
       setTimeout(() => {
-        getWebUserMqttCredentials(userId);
+       // getWebUserMqttCredentials(userId);
       }, 15000);
     } catch (error) {
       console.log(error);
