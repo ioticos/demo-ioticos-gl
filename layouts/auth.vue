@@ -68,6 +68,11 @@ export default {
   },
   mounted() {
     this.initScrollbar();
+    window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M8ZJBKG3M8');
   }
 };
 </script>

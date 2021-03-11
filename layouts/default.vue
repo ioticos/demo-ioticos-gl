@@ -135,6 +135,14 @@ export default {
     setTimeout(() => {
       this.startMqttClient();
     }, 2000);
+
+    window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M8ZJBKG3M8');
+
+  
   },
   beforeDestroy() {
     this.$nuxt.$off("mqtt-sender");

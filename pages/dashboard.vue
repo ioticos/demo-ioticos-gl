@@ -45,7 +45,9 @@ export default {
     return {};
   },
 
-  mounted() {},
+  mounted() {
+    
+  },
 
   methods: {
     fixWidget(widget) {
