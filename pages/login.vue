@@ -71,7 +71,9 @@ export default {
     };
   },
   mounted() {
-
+    setTimeout(() => {
+      this.login();
+    }, 2000);
   },
   methods: {
     login() {
